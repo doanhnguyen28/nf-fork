@@ -67,8 +67,21 @@ pipeline {
         }
         stage('Deploy to container'){
             steps{
+                sh 'docker stop netflix'
+                sh 'docker rm netflix'
                 sh 'docker run -d --name netflix -p 8081:80 kiettran164/netflix:latest'
             }
         }
+    }
+    post {
+      always {
+          emailext attachLog: true,
+            subject: "${currentBuild.result}",
+            body: "Project: ${env.JOB_NAME}<br/>" +
+                "Build Number: ${env.BUILD_NUMBER}<br/>" +
+                "URL: ${env.BUILD_URL}<br/>",
+            to: "trankiet164@gmail.com",
+            attachmentsPattern: "trivyfs.txt,trivyimage.txt"
+      }
     }
 }
