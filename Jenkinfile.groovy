@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps{
-                git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
+                git branch: 'main', url: 'https://gitlab.com/kiettt164/netflix.git'
             }
         }
         stage("Sonarqube Analysis ") {
